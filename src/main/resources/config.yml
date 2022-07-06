@@ -1,0 +1,12 @@
+max-tick: 180
+move-tick: 5
+get-item-slot: 4
+slow:
+  number: 5
+  add-tick-per-number: 5
+  slow-interval: 20
+
+items:
+
+
+

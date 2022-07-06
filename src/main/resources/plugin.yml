@@ -1,0 +1,11 @@
+main: com.division.RouletteItem
+name: RouletteItem
+version: ${project.version}
+authors: [ Reincarnation__ ]
+api-version: 1.16
+
+commands:
+  roulette:
+    aliases: [ 룰렛 ]
+    description: random roulette item
+
