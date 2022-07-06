@@ -1,6 +1,5 @@
 package com.division.file;
 
-
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -33,5 +32,9 @@ public class GuiConfig {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public YamlConfiguration getConfig() {
+        return this.config;
     }
 }

@@ -1,12 +1,17 @@
 max-tick: 180
-move-tick: 5
-get-item-slot: 4
+first-tick: 2
+get-item-slot: 12
+click-item-slot: 4
 slow:
   number: 5
-  add-tick-per-number: 5
-  slow-interval: 20
+  add-tick-per-interval: 2
+  slow-interval: 40
 
 items:
+  gui:
+
+  coupon:
+
 
 
 
