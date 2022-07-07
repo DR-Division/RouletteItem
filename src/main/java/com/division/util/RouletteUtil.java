@@ -12,22 +12,26 @@ public class RouletteUtil {
     public static boolean hasCoupon(ItemStack coupon, Player p) {
         if (coupon == null || coupon.getType() == Material.AIR) //쿠폰이 설정되지 않은경우
             return false;
-        return p.getInventory().contains(coupon);
+        int amount = 0;
+        for (ItemStack stack : p.getInventory().getContents()) {
+            if (stack != null && coupon.isSimilar(stack)) {
+                amount += stack.getAmount();
+            }
+        }
+        return amount >= coupon.getAmount();
     }
 
     public static void removeCoupon(ItemStack coupon, Player p) {
         int amount = coupon.getAmount();
         for (ItemStack stack : p.getInventory().getContents()) {
-            if (stack != null && stack.isSimilar(coupon)) {
-                if (stack.getAmount() >= amount) {
-                    if (stack.getAmount() > amount)
-                        stack.setAmount(stack.getAmount() - amount);
-                    else
-                        p.getInventory().remove(stack);
+            if (stack != null && coupon.isSimilar(stack)) {
+                if (stack.getAmount() < amount) {
+                    stack.setAmount(0);
                     break;
                 }
-                else
-                    p.getInventory().remove(stack);
+                else {
+                    stack.setAmount(stack.getAmount() - amount);
+                }
             }
         }
     }
@@ -35,7 +39,7 @@ public class RouletteUtil {
     public static void rollItem(Inventory inventory) {
         ItemStack firstItem = Objects.requireNonNull(inventory.getItem(9)).clone();
         for (int i = 10; i < 18; i++) {
-            inventory.setItem(i-1, inventory.getItem(i));
+            inventory.setItem(i - 1, inventory.getItem(i));
         }
         inventory.setItem(17, firstItem);
     }

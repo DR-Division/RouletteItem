@@ -2,6 +2,7 @@ package com.division.runnable;
 
 import com.division.data.GuiTaskData;
 import com.division.data.RouletteData;
+import com.division.event.RouletteItemGainEvent;
 import com.division.util.RouletteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -70,7 +71,8 @@ public class GuiRunnable implements Runnable {
         Player p = Bukkit.getPlayer(uuid);
         Bukkit.getScheduler().cancelTask(GuiTaskData.getTaskID(uuid));
         if (p != null) {
-            p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.5f, 3.0f);
+            Bukkit.getPluginManager().callEvent(new RouletteItemGainEvent(p, inventory.getItem(lastSlot)));
+            p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.5f, 1.0f);
             p.getInventory().addItem(inventory.getItem(lastSlot));
             p.closeInventory();
         }
