@@ -94,5 +94,11 @@ public class RouletteData {
         return guiData;
     }
 
+    public void setGuiDataByIndex(ItemStack stack, int index) {
+        if (index >= guiData.length)
+            return;
+        this.guiData[index] = stack;
+    }
+
 
 }
