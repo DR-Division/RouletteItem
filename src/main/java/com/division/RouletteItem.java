@@ -3,6 +3,8 @@ package com.division;
 import com.division.command.RouletteCommand;
 import com.division.data.RouletteData;
 import com.division.file.GuiConfig;
+import com.division.listener.GuiClickListener;
+import com.division.listener.GuiCloseListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -23,6 +25,8 @@ public class RouletteItem extends JavaPlugin {
         data.setActive(true);
         Objects.requireNonNull(getCommand("roulette")).setExecutor(command);
         Objects.requireNonNull(getCommand("roulette")).setTabCompleter(command);
+        getServer().getPluginManager().registerEvents(new GuiClickListener(), this);
+        getServer().getPluginManager().registerEvents(new GuiCloseListener(data), this);
 
 
 

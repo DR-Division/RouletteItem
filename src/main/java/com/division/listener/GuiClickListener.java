@@ -1,4 +1,6 @@
 package com.division.listener;
 
-public class GuiClickListener {
+import org.bukkit.event.Listener;
+
+public class GuiClickListener implements Listener {
 }
