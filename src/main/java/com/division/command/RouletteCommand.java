@@ -3,6 +3,7 @@ package com.division.command;
 import com.division.data.RouletteData;
 import com.division.file.GuiConfig;
 import com.division.gui.RouletteGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class RouletteCommand implements CommandExecutor, TabCompleter {
 
-    private final List<String> commandList = Arrays.asList("리로드", "쿠폰설정", "정보", "GUI", "저장", "활성화", "비활성화");
+    private final List<String> commandList = Arrays.asList("리로드", "쿠폰설정", "정보", "gui", "저장", "활성화", "비활성화");
     private final GuiConfig config;
     private final RouletteData data;
 
@@ -29,7 +30,8 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            if (strings.length >= 1 && commandList.contains(strings[0].toUpperCase()) && p.isOp()) {
+            Bukkit.broadcastMessage(commandList.toString());
+            if (strings.length >= 1 && commandList.contains(strings[0]) && p.isOp()) {
                 switch (strings[0]) {
                     case "리로드":
                         boolean reloadGUI = strings.length >= 2 && strings[1].equalsIgnoreCase("아이템"); //룰렛 리로드 아이템
@@ -49,12 +51,13 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
                     case "정보":
                         sendInformation(p);
                         break;
-                    case "GUI":
+                    case "gui":
                         new RouletteGUI(data.getGuiData()).openGUI(p, true);
                         break;
                     case "저장":
                         data.saveData();
                         config.saveConfig();
+                        p.sendMessage("저장되었습니다.");
                         break;
                     case "활성화":
                         if (data.isActive())
@@ -115,7 +118,7 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
     }
 
     public void sendCommandUsage(Player p) {
-        p.sendMessage("§f/룰렛 [정보/리로드 [아이템]/저장/쿠폰설정/GUI/활성화/비활성화");
+        p.sendMessage("§f/룰렛 [정보/리로드 [아이템]/저장/쿠폰설정/gui/활성화/비활성화");
     }
 
     public boolean hasCoupon(Player p) {
