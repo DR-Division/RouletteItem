@@ -5,7 +5,7 @@ click-item-slot: 4
 slow:
   number: 5
   add-tick-per-interval: 2
-  slow-interval: 40
+  slow-interval: 20
 
 items:
   gui:

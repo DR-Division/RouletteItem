@@ -25,7 +25,7 @@ public class RouletteItem extends JavaPlugin {
         data.setActive(true);
         Objects.requireNonNull(getCommand("roulette")).setExecutor(command);
         Objects.requireNonNull(getCommand("roulette")).setTabCompleter(command);
-        getServer().getPluginManager().registerEvents(new GuiClickListener(), this);
+        getServer().getPluginManager().registerEvents(new GuiClickListener(data, this), this);
         getServer().getPluginManager().registerEvents(new GuiCloseListener(data), this);
 
 
