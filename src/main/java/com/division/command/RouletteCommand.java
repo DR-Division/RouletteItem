@@ -3,6 +3,7 @@ package com.division.command;
 import com.division.data.RouletteData;
 import com.division.file.GuiConfig;
 import com.division.gui.RouletteGUI;
+import com.division.util.RouletteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -30,7 +31,6 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            Bukkit.broadcastMessage(commandList.toString());
             if (strings.length >= 1 && commandList.contains(strings[0]) && p.isOp()) {
                 switch (strings[0]) {
                     case "리로드":
@@ -84,8 +84,11 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
                 sendCommandUsage(p);
             else
                 if (data.isActive()) {
-                    if (hasCoupon(p))
+                    ItemStack coupon = data.getCoupon();
+                    if (RouletteUtil.hasCoupon(coupon, p)) {
+                        RouletteUtil.removeCoupon(coupon, p);
                         new RouletteGUI(data.getGuiData()).openGUI(p, false);
+                    }
                     else
                         p.sendMessage("쿠폰을 보유하고 있지 않습니다.");
                 }
@@ -121,10 +124,5 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
         p.sendMessage("§f/룰렛 [정보/리로드 [아이템]/저장/쿠폰설정/gui/활성화/비활성화");
     }
 
-    public boolean hasCoupon(Player p) {
-        ItemStack stack = data.getCoupon();
-        if (stack == null || stack.getType() == Material.AIR) //쿠폰이 설정되지 않은경우
-            return false;
-        return p.getInventory().contains(stack);
-    }
+
 }

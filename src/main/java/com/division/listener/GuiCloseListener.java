@@ -22,6 +22,8 @@ public class GuiCloseListener implements Listener {
                 ItemStack stack = event.getInventory().getItem(i);
                 if (stack != null && stack.getType() != Material.AIR)
                         data.setGuiDataByIndex(stack, i);
+                else
+                    data.setGuiDataByIndex(new ItemStack(Material.AIR), i);
             }
         }
     }
