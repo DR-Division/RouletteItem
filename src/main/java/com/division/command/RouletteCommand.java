@@ -105,8 +105,8 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
         p.sendMessage("활성화 상태 : " + data.isActive());
         p.sendMessage("작동시간 : " + data.getMaxTick() + "틱");
         p.sendMessage("최초 룰렛 작동 간격 : " + data.getFirstTick() + "틱");
-        p.sendMessage("최종 아이템 슬롯 : " + data.getItemSlot() + 1 + "번째");
-        p.sendMessage("룰렛 작동 아이템 슬롯 : " + data.getClickSlot() + 1 + "번째");
+        p.sendMessage("최종 아이템 슬롯 : " + (data.getItemSlot() + 1) + "번째");
+        p.sendMessage("룰렛 작동 아이템 슬롯 : " + (data.getClickSlot() + 1) + "번째");
         p.sendMessage("감속 횟수 : " + data.getSlowNumber() + "회");
         p.sendMessage("감속당 느려지는 틱 수치 : " + data.getAddTick() + "틱");
         p.sendMessage("감속 간격 : " + data.getSlowInterval() + "틱");
