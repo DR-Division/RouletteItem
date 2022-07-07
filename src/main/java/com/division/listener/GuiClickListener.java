@@ -29,9 +29,9 @@ public class GuiClickListener implements Listener {
             int slot = event.getRawSlot();
             Player p = (Player) event.getWhoClicked();
             ItemStack stack = event.getCurrentItem();
-            if (stack != null && stack.getType() != Material.AIR && slot == data.getClickSlot()) {
+            if (stack != null && stack.getType() != Material.AIR && slot == data.getClickSlot() && stack.getType() != Material.BARRIER) {
                 //시작버튼을 클릭한경우
-                GuiRunnable runnable = new GuiRunnable(p.getUniqueId(), data);
+                GuiRunnable runnable = new GuiRunnable(p.getUniqueId(), data, event.getInventory());
                 runnable.initList();
                 event.getInventory().setItem(slot, new ItemStack(Material.BARRIER));
                 GuiTaskData.setTaskID(p.getUniqueId(), Bukkit.getScheduler().runTaskTimer(Plugin, runnable, 0L, 1L).getTaskId());
