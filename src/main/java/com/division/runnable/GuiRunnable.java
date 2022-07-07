@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class GuiRunnable implements Runnable {
             rouletteTick += currentAddTick; //다음에 움직일 틱 설정
             RouletteUtil.rollItem(inventory);
             if (p != null)
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.5f, 3.0f);
+                p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1.0f);
         }
 
         tick++;
@@ -67,13 +68,16 @@ public class GuiRunnable implements Runnable {
         }
     }
 
+    @SuppressWarnings("ConstantConditions") //itemMeta = 없을경우 새로 만들어서 반환 (NPE문제 없어보여서 경고 제거합니다)
     public void giveItem() {
         Player p = Bukkit.getPlayer(uuid);
         Bukkit.getScheduler().cancelTask(GuiTaskData.getTaskID(uuid));
         if (p != null) {
-            Bukkit.getPluginManager().callEvent(new RouletteItemGainEvent(p, inventory.getItem(lastSlot)));
+            ItemStack stack = inventory.getItem(lastSlot);
+            Bukkit.getPluginManager().callEvent(new RouletteItemGainEvent(p, stack));
             p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.5f, 1.0f);
-            p.getInventory().addItem(inventory.getItem(lastSlot));
+            p.getInventory().addItem(stack);
+            p.sendTitle("§6[ §f! §6] §b아이템 흭득!", "§f" + (stack.getItemMeta().getDisplayName().isEmpty() ? stack.getType().toString() : stack.getItemMeta().getDisplayName()), 0, 50, 0);
             p.closeInventory();
         }
     }
