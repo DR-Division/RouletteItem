@@ -9,7 +9,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class GuiCloseListener implements Listener {
 
-    private RouletteData data;
+    private final RouletteData data;
+
+    public GuiCloseListener(RouletteData data) {
+        this.data = data;
+    }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {

@@ -80,8 +80,12 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
             else if (p.isOp())
                 sendCommandUsage(p);
             else
-                if (data.isActive())
-                    new RouletteGUI(data.getGuiData()).openGUI(p, false);
+                if (data.isActive()) {
+                    if (hasCoupon(p))
+                        new RouletteGUI(data.getGuiData()).openGUI(p, false);
+                    else
+                        p.sendMessage("쿠폰을 보유하고 있지 않습니다.");
+                }
                 else
                     p.sendMessage("현재 아이템 룰렛이 비활성화 되어있습니다.");
                 return true;
@@ -112,5 +116,12 @@ public class RouletteCommand implements CommandExecutor, TabCompleter {
 
     public void sendCommandUsage(Player p) {
         p.sendMessage("§f/룰렛 [정보/리로드 [아이템]/저장/쿠폰설정/GUI/활성화/비활성화");
+    }
+
+    public boolean hasCoupon(Player p) {
+        ItemStack stack = data.getCoupon();
+        if (stack == null || stack.getType() == Material.AIR) //쿠폰이 설정되지 않은경우
+            return false;
+        return p.getInventory().contains(stack);
     }
 }
